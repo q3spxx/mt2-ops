@@ -1,0 +1,16 @@
+keycloak:
+  auth:
+    adminUser: "admin"
+    adminPassword: "admin"
+  postgresql:
+    enabled: true
+    nameOverride: keycloak-postgresql
+    auth:
+      postgresPassword: test
+      username: test
+      password: test
+  ingress:
+    enabled: true
+    pathType: Prefix
+    hostname: keycloak.mt2
+    path: /

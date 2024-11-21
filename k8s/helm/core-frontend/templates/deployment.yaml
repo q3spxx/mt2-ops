@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "name" . }}
+  labels:
+    app: core-frontend
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: core-frontend
+  template:
+    metadata:
+      labels:
+        app: core-frontend
+    spec:
+      containers:
+        - name: {{ template "name" . }}
+          image: {{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.app.port }}
+          volumeMounts:
+            - name: keycloak-json
+              mountPath: /usr/share/nginx/html/keycloak.json
+              subPath: keycloak.json
+            - name: core-frontend-conf
+              mountPath: /etc/nginx/conf.d/frontend.conf
+              subPath: core-frontend.conf
+      volumes:
+        - name: keycloak-json
+          configMap:
+            name: core-frontend
+            items:
+              - key: keycloak.json
+                path: keycloak.json
+        - name: core-frontend-conf
+          configMap:
+            name: core-frontend
+            items:
+              - key: core-frontend.conf
+                path: core-frontend.conf

@@ -1,0 +1,17 @@
+apiVersion: v2
+name: mt2
+description: A Helm chart for mt2
+type: application
+version: 1.0.0
+appVersion: 1.0.0
+
+dependencies:
+  - name: core-frontend
+    version: 1.0.0
+    repository: "file://../core-frontend"
+  - name: core-backend
+    version: 1.0.0
+    repository: "file://../core-backend"
+  - name: keycloak-config
+    version: 1.0.3
+    repository: "file://../keycloak-config"

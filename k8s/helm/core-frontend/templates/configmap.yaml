@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: core-frontend
+  labels:
+    app: core-frontend
+data:
+  keycloak.json: |
+    {
+    "realm": "{{ .Values.global.keycloak.realm }}",
+    "auth-server-url": "{{ .Values.global.keycloak.protocol }}://{{ .Values.global.keycloak.host }}/",
+    "ssl-required": "external",
+    "resource": "{{ .Values.global.keycloak.client }}",
+    "public-client": true,
+    "confidential-port": 0
+    }
+  core-frontend.conf: |
+    server {
+      listen       {{ .Values.app.port }};
+      server_name  localhost;
+
+      root /usr/share/nginx/html;
+
+      location / {
+        try_files $request_uri /index.html;
+      }
+    }

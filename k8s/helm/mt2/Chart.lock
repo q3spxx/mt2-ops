@@ -1,0 +1,12 @@
+dependencies:
+- name: core-frontend
+  repository: file://../core-frontend
+  version: 1.0.0
+- name: core-backend
+  repository: file://../core-backend
+  version: 1.0.0
+- name: keycloak-config
+  repository: file://../keycloak-config
+  version: 1.0.3
+digest: sha256:1ebf95b301e95954e385ef369d12fa882b2bfeee5489adb9fdc48eec331f224a
+generated: "2023-09-12T02:44:45.5063751+04:00"

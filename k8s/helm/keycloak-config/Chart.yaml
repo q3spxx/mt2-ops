@@ -1,0 +1,11 @@
+apiVersion: v2
+name: keycloak-config
+description: A Helm chart for keycloak
+type: application
+version: 1.0.3
+appVersion: 1.0.0
+
+dependencies:
+  - name: keycloak
+    version: 15.1.8
+    repository: "oci://registry-1.docker.io/bitnamicharts"

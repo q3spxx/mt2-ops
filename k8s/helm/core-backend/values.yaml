@@ -1,0 +1,24 @@
+global:
+  keycloak:
+    realm: mt2
+    client: mt2-client
+    host: keycloak.mt2
+    protocol: http
+service:
+  port: 8080
+postgresql:
+  nameOverride: core-postgresql
+  auth:
+    postgresPassword: test
+    username: test
+    password: test
+    database: test
+  port: 5432
+image:
+  tag: q3spxx/mt2-back:1.0.11
+app:
+  host: localhost
+  port: 8080
+keycloak:
+  protocol: http
+replicas: 1

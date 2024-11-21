@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "name" . }}
+  labels:
+    app: core-backend
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: core-backend
+  template:
+    metadata:
+      labels:
+        app: core-backend
+    spec:
+      initContainers:
+        - name: check-postgres-ready
+          image: postgres:9.6.5
+          command: ['sh', '-c', 'until pg_isready -h {{ template "postgresql.host" . }} -p 5432; do echo waiting for database; sleep 2; done;']
+      containers:
+        - name: {{ template "name" . }}
+          image: {{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.app.port }}
+          env:
+            - name: "DB_HOST"
+              value: {{ template "postgresql.host" . }}
+            - name: "DB_PORT"
+              value: {{ .Values.postgresql.port | quote }}
+            - name: "DB_USERNAME"
+              value: {{ .Values.postgresql.auth.username }}
+            - name: "DB_PASSWORD"
+              value: {{ .Values.postgresql.auth.password }}
+            - name: "DB_DATABASE"
+              value: {{ .Values.postgresql.auth.database }}
+            - name: "APP_HOST"
+              value: {{ .Values.app.host }}
+            - name: "APP_PORT"
+              value: {{ .Values.app.port | quote }}
+            - name: "KEYCLOAK_PROTOCOL"
+              value: {{ .Values.global.keycloak.protocol }}
+            - name: "KEYCLOAK_HOST"
+              value: {{ .Values.global.keycloak.host }}
+            - name: "KEYCLOAK_REALM"
+              value: {{ .Values.global.keycloak.realm }}

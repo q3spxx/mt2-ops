@@ -1,0 +1,11 @@
+global:
+  keycloak:
+    realm: mt2
+    client: mt2-client
+    host: keycloak.mt2
+    protocol: http
+image:
+  tag: q3spxx/mt2-front:1.0.7
+replicas: 1
+app:
+  port: 8080
